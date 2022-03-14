@@ -1,0 +1,206 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.4 (15/5/16)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com) with extensive modifications by
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twocolumn]{article}
+
+
+\usepackage{blindtext} % Package to generate dummy text throughout this template 
+
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+
+\usepackage[hmarginratio=1:1,top=2cm,bottom=2cm,left=2cm,right=2cm, paper=a4paper, columnsep=20pt]{geometry} % Document margins
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+
+\usepackage{lettrine} % The lettre is the first enlarged letter at the beginning of the text
+
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{noitemsep} % Make itemize lists more compact
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{Course Code: 06-32257 $\bullet$ \today $\bullet$ Sarathkumar P S [ 2359859 ] } % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+\usepackage{titling} % Customizing the title section
+
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+\posttitle{\end{center}} % Article title closing formatting
+\title{Critical Review : OpenPose: Realtime Multi-Person 2D Pose Estimation Using Part Affinity Fields} % Article title
+\author{%
+\textsc{Sarathkumar P S [2359859]} \\[1ex] % Your name
+\textsc{Course Code [06-32257]} \\[1ex] % Your name
+\normalsize University of Birmingham \\ % Your institution
+\normalsize \href{mailto:sxp208@student.bham.ac.uk}{sxp208@student.bham.ac.uk} % Your email address
+%\and % Uncomment if 2 authors are required, duplicate these 4 lines if more
+%\textsc{Jane Smith}\thanks{Corresponding author} \\[1ex] % Second author's name
+%\normalsize University of Utah \\ % Second author's institution
+%\normalsize \href{mailto:jane@smith.com}{jane@smith.com} % Second author's email address
+}
+\date{\today} % Leave empty to omit a date
+
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+% Print the title
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+\subsection{Provide name of the article and publication details}
+This document conducts a critical review of the journal article, OpenPose: Realtime Multi-Person 2D Pose Estimation Using Part Affinity Fields\cite{DBLP:journals/corr/abs-1812-08008}, published in 2018 at arXiv. The journal article follows the original paper \cite{cCao_2017_CVPR} presented in the 2017 IEEE Conference on Computer Vision and Pattern Recognition(CVPR) and extends the original work by improving the runtime performance and accuracy.
+
+\subsection{What the paper is about}
+Realtime multi-person 2D pose estimation is a key component in enabling machines to have an understanding of people in images and videos, however, inferring the pose of multiple people in images presents a unique set of challenges such as position and scale of people in the image, spatial interference and runtime performance. In this paper authors present a realtime approach to detect the 2D pose of multiple people in an image; moreover, the authors claim that the same approach can be used to any keypoint annotation task and demonstrates this by running the same network architecture for the task of vehicle keypoint detection.
+
+\subsection{how does it fit into current work in that field}
+The research studies in the area of pose estimation evolved from identifying human pose on a single person image to multi-person image; thus, initial approaches to solve the multi-person pose estimation relied heavily on identifying persons in the image first and then applying available single person pose estimation solutions for each person in the image, this approach is called top-down approach. There are several challenges to this approach, firstly the runtime is proportional to the number of people in the image, secondly this approach doesn't capture dependencies across different people in the image, finally accuracy of this approach depends heavily on the person detection model used. 
+
+\subsection{how does it approach the problem.}
+In this paper, authors approach the multi-person pose estimation problem in a bottom-up manner, ie, identify all the keypoints/parts present in the image first, then identify the limbs and finally construct the human pose. Though there were studies using bottom-up approach to solve the multi-person pose estimation problem, they all suffered with high inference time, in the order of minutes and hours. To improve the inference time and accuracy, authors introduces a representation, Part Affinity Fields(PAFs), consisting of a set of flow fields that encodes unstructured pairwise relationships between body parts of a variable number of people.
+%------------------------------------------------
+
+\section{Summary of the work, results \& findings}
+Below are the main steps involved in the proposed method
+\begin{enumerate}
+	\item Firstly, the image is analyzed by a Convolutional Neural Network (CNN) to extract feature maps.
+	\item Secondly, the feature maps are processed with multi-stage CNN to generate: 
+	\begin{itemize}
+		\item A set of Part Confidence Maps (Assign each pixel in the image a confidence score indicating the chance that  part \emph{j} is present at that location, this is done for all the part types)
+		\item  A set of Part Affinity Fields (PAFs) which encodes the degree of association between the parts.
+	\end{itemize}
+	\item Finally, the Confidence Maps and Part Affinity Fields are processed by a greedy algorithm to obtain the poses for each person in the image.	
+\end{enumerate}
+
+The authors evaluates the above model with 3 different datasets, MPII Human Pose Dataset\cite{andriluka20142d}, COCO Keypoint Challenge Dataset\cite{lin2014microsoft} and \href{https://cmu-perceptual-computing-lab.github.io/foot_keypoint_dataset/}{Human Foot Keypoint Dataset}.
+
+\subsection{What does the paper present in terms of results, their conclusions and contribution to the science}
+The authors claim that the proposed method outperforms \cite{insafutdinov2016deepercut} in MPII Human Pose Dataset\cite{andriluka20142d} by 8.5\% on mAP(Mean Average Precision) and the inference time is 6 orders of magnitude less, approximately 0.005 seconds per image. On COCO Keypoint Challenge Dataset\cite{lin2014microsoft} authors approach is less accurate but the inference time is lowest; thus, authors approach is best suitable for scenarios where accuracy is less important than the speed. 
+
+Authors put forth an argument that current benchmarks evaluates the performance of a model mainly by looking at the accuracy, however, inference time is also an important aspect. Authors state that the current gap in accuracy between top-down and bottom-up approaches is due to the input image resolution limitations; nevertheless, authors are optimistic that in future when hardware gets faster and increases its memory, bottom-up methods might be able to work with higher resolution images and reduce the accuracy gap with respect to top-down approaches. 
+
+Additionally, authors have created a foot keypoint dataset consisting of 15K foot keypoint instances and have open-sourced this work as OpenPose library, the first realtime system for body, foot, hand, and facial keypoint detection.
+
+\subsection{How does it fit into other published works in this field}
+Accuracy of the authors model is not best among the other published works in this field such as \cite{he2017mask}, \cite{fang2017rmpe},\cite{chen2018cascaded},\cite{xiao2018simple},\cite{newell2017associative},\cite{fieraru2018learning}, but, the runtime analysis shows that it outperforms most of these models still providing comparable/usable level of accuracy. Moreover, the runtime for the authors approach doesn't depend on the number of people in the image, most of the other model run times depends linearly on the number of people in the image. Hence I believe this paper will have wider acceptance among certain industries as it provides human pose estimation at a usable level of accuracy with small response time.
+
+\subsection{What does it contribute to better understanding of the problem}
+Authors claims that combining body and foot estimation into a single model boosts the accuracy of each
+component individually and reduces the inference time of running them sequentially. This observation means that adding more keypoints to the human pose estimation problem actually helps the network to learn better and reduce spatial interference related issues. Furthermore, authors demonstrate that a greedy parsing algorithm is sufficient to get results with comparable accuracy while reducing the runtime significantly.
+
+%------------------------------------------------
+
+\section{Pros/Cons of the Paper}
+
+\subsection{What do you like about the paper?}
+\begin{itemize}
+	\item Authors has provided a detailed analysis on runtime of the model and how it compares with the other state of the art models.
+	\item Authors demonstrate that their model can be used to any keypoint annotation task which opens a lot of application possibilities.
+	\item Authors released foot keypoint dataset  and open sourced the OpenPose library as part of the work on this paper which has helped a lot of studies and applications since 2018.
+	\item As of today, \href{https://github.com/CMU-Perceptual-Computing-Lab/openpose}{OpenPose library} has got 23.5K stars on github with 92 contributors and is well maintained, which makes this paper still relevant for the industry as well as research studies.
+\end{itemize}
+
+\subsection{What stands out as being significant?}
+\begin{itemize}
+	\item Inference time of the model is extremely good such that it can be used in industry level applications.
+	\item PAF representation ( encodes both location \& direction of a point) introduced in this paper has potential applications in other research areas as well.
+	\item Greedy parsing approach introduced in this paper can be applied to other similar problems to reduce running time.
+\end{itemize}
+
+\subsection{What don't you like about the paper?}
+\begin{itemize}
+	\item The authors could have added accuracy \& inference time comparison with more models, especially considering there exists other models with higher accuracy such as \cite{ning2017knowledge},\cite{ke2018multi} etc released at the same of time of publishing this paper.
+	\item It would have been helpful if the authors wrote a section describing the model from an explainability point of view.
+\end{itemize}
+
+\subsection{Was there any significant gaps in what has been presented?}
+\begin{itemize}
+	\item Authors hasn't given a clear rationale about why they chose first 10 layers of VGG-19 as the baseline CNN network to extract features before passing the image to PAF stage.
+	\item Though the authors mentioned about accuracy of the Associative Embedding architecture\cite{newell2017associative} in the paper, authors does not mention anything about the runtime of this architecture. Considering that Associative Embedding approach slightly higher accuracy than authors model, it would have been nice to get a comparison on time as well.
+	\item Figure 13 in the paper shows 2 data point for the OpenPose algorithm and has mentioned that it is for images with different resolutions, but, there is no information available on the figure about the resolution of image.
+\end{itemize}
+
+%------------------------------------------------
+
+\section{Potential Advancement \& Future Work}
+
+
+\subsection{Based on your literature search above and wider reading, what could have been done to make the work more substantial?}
+\begin{itemize}
+	\item More comparisons and experiments on the model based on images of different resolution would have given the reader a better understanding of the model and its application scenarios.
+	\item Authors could have tried initializing the baseline network with a different approach, such as ResNet50, instead of VGG-19 and checked whether it improves the result.
+\end{itemize}
+
+\subsection{How would you recommend the work to continue on this topic?}
+\begin{itemize}
+	\item Since the release of the paper \emph{Attention is All You Need}\cite{Vaswani2017AttentionIA}, there were some studies, \cite{Dosovitskiy2021AnII}, experimenting to use attention based mechanism in computer vision tasks. The authors approach to get the PAF \& confidence maps currently relies on CNN network only, we can study this architecture further conduct experiment to see whether attention based mechanism improves the accuracy or speed of the authors approach.
+	\item Like papers \cite{Howard2017MobileNetsEC}, \cite{Groos2021EfficientPoseSS}, there is a scope for evaluating the performance of the authors approach from an edge device perspective and can be checked for improvement specifically for edge devices.  
+\end{itemize}
+
+\subsection{What alternative approaches, analysis and testing would you recommend.}
+\begin{itemize}
+	\item The performance can be evaluated on additional datasets such as \href{https://posetrack.net/}{PoseTrack}
+	\item Analyze the performance on images with different resolutions.
+	\item As the approach is multistage, Part Confidence Maps stage and Part Affinity Fields (PAFs) stage, an analysis of the loss function at each stage would be helpful to understand the gaps \& scope for improvement.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{plain}
+\bibliography{ref}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
